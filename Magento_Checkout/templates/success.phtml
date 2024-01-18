@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<?php /** @var $block \Betterhardware\CheckoutBlockExtend\Rewrite\Magento\Checkout\Block\Onepage\Success */ ?>
+<div class="checkout-success">
+    <p>You're all done!</p>
+    <p>Thank you for your order.</p>
+    <?php if ($block->getOrderId()) :?>
+        <?php if ($block->getCanViewOrder()) :?>
+            <p><?= $block->escapeHtml(__('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeUrl($block->getViewOrderUrl()), $block->getOrderId())), ['a', 'strong']) ?></p>
+        <?php  else :?>
+            <p><?= $block->escapeHtml(__('Your order # is: <span>%1</span>.', $block->getOrderId()), ['span']) ?></p>
+        <?php endif;?>
+    <?php endif;?>
+
+    <p>You should also receive a separate order confirmation email, and payment receipt email.</p>
+    <p>Your order is now with our dispatch team.</p>
+    <p>Once your order is dispatched, you'll be sent a Shipping email notification with tracking details, so please keep an eye out for it. And if you provided your mobile number, you'll be kept up-to-date with tracking updates.</p>
+
+    <?= $block->getAdditionalInfoHtml() ?>
+
+    <p>Haven't finished looking yet? You can continue browsing our range below:</p>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary continue" href="<?= $block->escapeUrl($block->getContinueUrl()) ?>"><span><?= $block->escapeHtml(__('Continue Shopping')) ?></span></a>
+        </div>
+    </div>
+</div>
+<?php
+    $order = $block->getOrderDetails();
+    $items = $order->getAllVisibleItems();
+    $item_array = [];
+
+    foreach($items as $item){
+
+        $item_array[] = [
+
+            'item_id' => $item->getSku(),
+            'item_name' => $item->getName(),
+            'price' => $item->getPrice(),
+            'quantity' => $item->getQtyOrdered()
+        ];
+    }
+?>
+
+<script type="text/javascript">
+    gtag("event", "purchase", {
+        transaction_id: <?= $order->getIncrementId() ?>,
+        value: <?= $order->getGrandTotal() ?>,
+        currency: "AUD",
+        items = <?php print_r(json_encode($item_array)) ?>
+    });
+</script>

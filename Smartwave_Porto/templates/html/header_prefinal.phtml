@@ -1,0 +1,47 @@
+<?php $_helper = $this->helper('Smartwave\Porto\Helper\Data');?>
+<header class="page-header type1" >
+<div class="header-wrapper">
+  <div class="container header-1">
+    <div class="top-links-left">
+      <div class="firstlink">
+        <a href="<?= $_helper->getBaseLinkUrl().'where-dreams-are-built'?>"><i class="fas fa-heart"></i> Impact</a>
+      </div>
+      <div class="restoflinks">
+        <a href="<?= $_helper->getBaseLinkUrl().'click-and-collect'?>"><i class="fas fa-map-marker-alt"></i> Click & Collect</a>
+        <a href="<?= $_helper->getBaseLinkUrl().'free-shipping'?>"><i class="fas fa-truck"></i> FREE METRO SHIPPING on orders over $99*</a>
+        <a href="<?= $_helper->getBaseLinkUrl().'returns-policy'?>"><i class="fas fa-sync-alt"></i> 60 Day Returns</a>
+        <?= $this->getLoginBlock(); ?>
+      </div>
+    </div>
+    <div class="top-links-right">
+      <div class="fb-plugin">
+          <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbetterhardware&amp;layout=button_count&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;amp" frameborder="0" height="24" width="100"></iframe>
+      </div>
+    </div>    
+  </div>
+  <div class="container header-2">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container header-2">
+        <?php echo $this->getChildHtml("logo"); ?>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <div class="nav-link"><?php echo $this->getChildHtml("top.search"); ?></div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link"><?php echo $this->getChildHtml("custom_block"); ?></div>
+            </li>
+            <li class="nav-item" id="d-minicart">
+              <div class="nav-link icon-links"><?php echo $this->getChildHtml("minicart"); ?></div>
+            </li>
+          </ul>        
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+<?php echo $this->getChildHtml("navigation.sections"); ?>
+</header>

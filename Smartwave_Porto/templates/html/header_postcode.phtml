@@ -1,0 +1,117 @@
+<script>
+    require([
+        'jquery',
+        'jquery/ui'
+],
+function ($) {
+      $( function() {
+
+        $(document).ready(function(){
+          $("#search-open").click(function(){
+            $("#mobile-search").toggle();
+          });
+        });
+      
+        $.getJSON("<?php echo $this->getBaseUrl().'media/au_postcodes/au_postcode_suburb.json'?>", function(data){
+
+          locations = [];
+          for(var i=0, len = data.length;i<len;i++){
+            locations.push(data[i].postcode + ", " + data[i].place_name);
+          }
+          $("#tags").autocomplete({
+              source: locations
+          });
+
+        });
+
+      });
+    });
+</script>
+<?php $_helper = $this->helper('Smartwave\Porto\Helper\Data');?>
+<header class="page-header type1" >
+<div class="header-wrapper">
+  <div class="container header-1">
+    <div class="top-links-left">
+      <ul class="nav">
+        <li class="nav-item">
+          <div class="nav-link"><a href="<?= $_helper->getBaseLinkUrl().'where-dreams-are-built'?>"><i class="fas fa-heart"></i> Impact</a></div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link"><a href="<?= $_helper->getBaseLinkUrl().'click-and-collect'?>"><i class="fas fa-map-marker-alt"></i> Click & Collect</a></div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link"><a href="<?= $_helper->getBaseLinkUrl().'free-shipping'?>"><i class="fas fa-truck"></i> FREE METRO SHIPPING on orders over $99*</a></div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link"><a href="<?= $_helper->getBaseLinkUrl().'returns-policy'?>"><i class="fas fa-sync-alt"></i> Covid-19 Returns Policy</a></div>
+        </li>
+      </ul>
+    </div>
+    <div class="top-links-right">
+      <div class="nav-link">
+        <input type="text" id="tags" name="delivery_location" placeholder="Enter you location">
+      </div>
+    </div>    
+  </div>
+  <div class="container header-2">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <?php echo $this->getChildHtml("logo"); ?>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <div class="nav-link"><?php echo $this->getChildHtml("top.search"); ?></div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link"><img src="<?php echo $this->getBaseUrl().'media/wysiwyg/phone_icon.png'?>" alt="call us" /><span class="phone-no">1300 309 764</span></div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link icon-links">
+                  <a href="<?php echo $_helper->getBaseLinkUrl().'customer/account/' ?>" title="My Account"><i class="porto-icon-user-2"></i></a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link icon-links"><?php echo $this->getChildHtml("minicart"); ?></div>
+            </li>
+          </ul>        
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+<?php echo $this->getChildHtml("navigation.sections"); ?>
+</header>
+
+<div class="mobile-header-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col m-h-col">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <i class="porto-icon-list"></i>
+          </button>
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <?php echo $this->getChildHtml("logo"); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <?php echo $this->getMegaMenu(); ?>
+            </div>
+          </div>
+        </div>
+        <div class="col m-h-col m-center">
+          <?php echo $this->getChildHtml("logo"); ?>
+        </div>
+        <div class="col m-h-col m-right">
+          <?php echo $this->getChildHtml("minicart"); ?>
+          <a href="#" id="search-open"><i class="porto-icon-search-1"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="mobile-search">
+      <?php echo $this->getChildHtml("top.search"); ?>
+    </div>
+</div>

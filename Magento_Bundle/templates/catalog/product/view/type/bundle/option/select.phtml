@@ -1,0 +1,83 @@
+<?php
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php /* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Select */ ?>
+<?php $_option      = $block->getOption(); ?>
+<?php $_selections  = $_option->getSelections(); ?>
+<?php $_default     = $_option->getDefaultSelection(); ?>
+<?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
+<div class="field option <?php echo ($_option->getRequired()) ? ' required': ''; ?>">
+    <label class="label" for="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>">
+        <?php if($_option->getTitle() == 'Factory Hydraulic Swaging' || $_option->getTitle() == 'Factory Swaging'):?>
+            <span><?php echo $block->escapeHtml($_option->getTitle()) ?>
+            <div class="swaging-tooltip" style="border-bottom: unset;">
+                <i class="fa fa-info-circle" style="font-size: 1.3em;color: orangered;margin-left: 0.4em;"></i>
+                <div class="top" style="background-color: #fff;">
+                    <div class="popup-text">
+                        <p>Factory Hydraulic Swaging is a service we offer, where we produce your wire balustrade assemblies for you.
+                            <br/>We'll cut the wire to length and then crimp (swage) the fittings to produce the wire assembly.</p>
+                        <p>Please note: A small setup fee applies to smaller factory swaging orders, in addition to the standard swaging cost. If applicable, this is added-to-cart automatically.</p> 
+                    </div>
+                    <div class="popup-image">
+                        <img src="<?= $this->getBaseUrl().'media/catalog/product/f/a/factory_hydraulic_swaging_wirerope_pre-swage.jpg'?>">
+                    </div>
+                    
+                </div>
+            </div>
+            </span>
+        <?php else:?>
+            <span><?php echo $block->escapeHtml($_option->getTitle()) ?></span>
+        <?php endif;?>
+    </label>
+    <?php if(preg_match('/Swaging/', $_option->getTitle())):?>
+        <p></p>
+    <?php endif;?>
+    <div class="control">
+        <?php if ($block->showSingle()): ?>
+            <?php /* @escapeNotVerified */ echo $block->getSelectionTitlePrice($_selections[0]) ?>
+            <input type="hidden"
+                   class="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>  product bundle option"
+                   name="bundle_option[<?php /* @escapeNotVerified */ echo $_option->getId() ?>]"
+                   value="<?php /* @escapeNotVerified */ echo $_selections[0]->getSelectionId() ?>"/>
+        <?php else:?>
+            <select id="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>"
+                    name="bundle_option[<?php /* @escapeNotVerified */ echo $_option->getId() ?>]"
+                    class="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?> product bundle option bundle-option-select change-container-classname"
+                <?php if ($_option->getRequired()) echo 'data-validate = {required:true}' ?>>
+                <option value=""><?php /* @escapeNotVerified */ echo __('Choose a selection...') ?></option>
+                <?php foreach ($_selections as $_selection): ?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_selection->getSelectionId() ?>"
+                        <?php if ($block->isSelected($_selection)) echo ' selected="selected"' ?>
+                        <?php if (!$_selection->isSaleable()) echo ' disabled="disabled"' ?>>
+                        <?php /* @escapeNotVerified */ echo $block->getSelectionTitlePrice($_selection, false) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        <?php endif; ?>
+        <div class="nested">
+            <div class="field qty qty-holder">
+                <label class="label" for="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>-qty-input">
+                    <span><?php /* @escapeNotVerified */ echo __('Quantity') ?></span>
+                </label>
+                <div class="control">
+                    <input <?php if (!$_canChangeQty) echo ' disabled="disabled"' ?>
+                           id="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>-qty-input"
+                           class="input-text qty<?php if (!$_canChangeQty) echo ' qty-disabled' ?>"
+                           type="number"
+                           name="bundle_option_qty[<?php /* @escapeNotVerified */ echo $_option->getId() ?>]"
+                           value="<?php /* @escapeNotVerified */ echo $_defaultQty ?>"/>
+                    <div class="qty-changer">
+                        <a href="javascript:void(0)" class="qty-inc"><i class="porto-icon-up-dir"></i></a>
+                        <a href="javascript:void(0)" class="qty-dec"><i class="porto-icon-down-dir"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

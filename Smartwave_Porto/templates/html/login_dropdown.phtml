@@ -1,0 +1,32 @@
+<div>
+       <form class="form form-login"
+        action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>"
+        method="post"
+        id="header-login-form"
+        data-mage-init='{"validation":{}}'>
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <fieldset class="fieldset login" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
+                <div class="field email required">
+                    <div class="control">
+                        <input name="login[username]" value="<?php echo $block->escapeHtml($block->getUsername()) ?>"  autocomplete="off" id="email" type="email" class="input-text" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" data-validate="{required:true, 'validate-email':true}" placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>">
+                    </div>
+                </div>
+                 <div class="field password required">
+                     <div class="control">
+                        <input name="login[password]" type="password" autocomplete="off" class="input-text" id="pass" title="<?php /* @escapeNotVerified */ echo __('Password') ?>" data-validate="{required:true}" placeholder="<?php /* @escapeNotVerified */ echo __('Password') ?>">
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <div class="primary"><button type="submit" class="action login primary" name="send" id="send2"><span><?php /* @escapeNotVerified */ echo __('Sign In') ?></span></button></div>
+                    <div class="secondary" style="margin-top:0.5rem;"><a class="action remind" href="<?php /* @escapeNotVerified */ echo $block->getForgotPasswordUrl() ?>"><span style="font-size: small;"><?php /* @escapeNotVerified */ echo __('Forgot Your Password?') ?></span></a></div>
+                </div>
+            </fieldset>
+        </form>
+
+        <hr>
+
+        <div style="text-align:center;">
+            <a class="action submit primary" href="<?= $this->getUrl('customer/account/create');?>">Register</a>
+        </div>
+
+</div>                  

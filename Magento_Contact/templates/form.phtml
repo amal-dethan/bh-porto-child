@@ -1,0 +1,170 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<!--<style>
+#contact-form .required span::after {
+    content: " *";
+    color: #e02b27;
+}
+</style>-->
+<form class="form contact"
+      action="<?php echo $block->getFormAction(); ?>"
+      id="contact-form"
+      method="post"
+	  enctype="multipart/form-data"
+      data-hasrequired="<?php echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?php echo __('Contact') ?> <b><?php echo __('Us') ?></b></span></legend><br />
+        <fieldset class="fieldset row">
+        <div class="fields col-md-6">
+			<div class="field name required">
+				<label class="label" for="name"><span><?php echo __('Name') ?></span></label>
+				<div class="control">
+					<input name="name" id="name" title="<?php echo __('Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+				</div>
+			</div>
+			<div class="field email required">
+				<label class="label" for="email"><span><?php echo __('Email') ?></span></label>
+				<div class="control">
+					<input name="email" id="email" title="<?php echo __('Email') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+				</div>
+			</div>
+			<div class="field telephone required">
+				<label class="label" for="telephone"><span><?php echo __('Phone Number') ?></span></label>
+				<div class="control">
+					<input name="telephone" id="telephone" title="<?php echo __('Phone Number') ?>" value="" class="input-text" type="text" data-validate="{required:true}"/>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label" for="nature_of_enquiry"><span><?php echo __('Nature of enquiry') ?></span></label>
+				<div class="control">
+					<select id="nature_of_enquiry" name="nature_of_enquiry">
+						<option value="Sales Enquiry">Sales Enquiry</option>
+						<option value="Product Support">Product Support</option>
+						<option value="Customer Service">Customer Service</option>
+						<option value="Shipping and Delivery">Shipping and Delivery</option>
+					</select>
+				</div>
+			</div>
+			<div class="field">
+			<label class="label" for="customer_interest"><span><?php echo __('Products your enquiry is related to:') ?></span></label>
+				<div class="control">
+					<input type="checkbox" id="wire_balustrade" name="customer_interest[]" value="Wire Balustrade">
+					<label for="wire_balustrade"><span><?php /* @escapeNotVerified */ echo __('Wire Balustrade') ?></span></label><br/>
+					<input type="checkbox" id="decking_screws_fasteners" name="customer_interest[]" value="Decking Screws & Fasteners">
+					<label for="decking_screws_fasteners"><span><?php /* @escapeNotVerified */ echo __('Decking Screws & Fasteners') ?></span></label><br/>
+					<input type="checkbox" id="posts_handrail" name="customer_interest[]" value="Posts/Handrail">
+					<label for="posts_handrail"><span><?php /* @escapeNotVerified */ echo __('Posts/Handrail') ?></span></label><br/>
+					<input type="checkbox" id="espalier_and_trellis_systems" name="customer_interest[]" value="Espalier and Trellis Systems">
+					<label for="espalier_and_trellis_systems"><span><?php /* @escapeNotVerified */ echo __('Espalier and Trellis Systems') ?></span></label><br/>
+					<input type="checkbox" id="vertical_gardens" name="customer_interest[]" value="Vertical Gardens">
+					<label for="vertical_gardens"><span><?php /* @escapeNotVerified */ echo __('Vertical Gardens') ?></span></label><br/>
+					<input type="checkbox" id="other" name="customer_interest[]" value="Other">
+					<label for="other"><span><?php /* @escapeNotVerified */ echo __('Other') ?></span></label>
+				</div>
+			</div>
+		
+			<div class="field time_frame">
+				<label class="label" for="time_frame"><span><?php echo __('Do you have a specific time frame for your project?') ?></span></label>
+				<div class="control">
+					<!--<input name="time_frame" id="time_frame" title="<?php //echo __('Do you have a specific time frame for your project?') ?>" value="" class="input-text" type="text" />-->
+					<select id="time_frame" name="time_frame">
+						<option value="ASAP">ASAP</option>
+						<option value="1 Week">1 Week</option>
+						<option value="2-3 Weeks">2-3 Weeks</option>
+						<option value="A Month or More">A Month or More</option>
+					</select>
+				</div>
+			</div>
+        </div>
+        <div class="fields col-md-6">
+			<div class="field suburb">
+				<label class="label" for="suburb"><span><?php echo __('Suburb') ?></span></label>
+				<div class="control">
+					<input name="suburb" id="suburb" title="<?php echo __('Suburb') ?>" value="" class="input-text" type="text" />
+				</div>
+			</div>
+			<div class="field">
+				<label class="label" for="postcode"><span><?php echo __('Post code') ?></span></label>
+				<div class="control">
+					<input name="postcode" id="postcode" title="<?php echo __('Post code') ?>" value="" class="input-text" type="text" />
+				</div>
+			</div>
+			<div class="field comment required">
+				<label class="label" for="comment"><span><?php echo __('Please provide some details') ?></span></label>
+				<div class="control">
+					<textarea name="comment" id="comment" title="<?php echo __('What’s on your mind?') ?>" class="input-text" cols="5" rows="8" data-validate="{required:true}"></textarea>
+				</div>
+			</div>
+			<div class="field attachment">
+				<label class="label" for="attachment"><span><?php echo __('Add Images/PDFs (jpg/png/pdf)') ?></span><span> Max file size : 6MB</span></label>
+				<div class="control">
+					<input name="attachment1" id="attachment1" title="<?php echo __('Attachment 1') ?>" value="" class="input-text" type="file" accept="image/jpeg,image/png,application/pdf" onchange="size_check('attachment1')"/>
+				</div>
+			</div>
+			<div class="field attachment">
+				<!--<label class="label" for="attachment1"><span><?php echo __('Attachment 2') ?></span></label>-->
+				<div class="control">
+					<input name="attachment2" id="attachment2" title="<?php echo __('Attachment 2') ?>" value="" class="input-text" type="file" accept="image/jpeg,image/png,application/pdf" onchange="size_check('attachment2')"/>
+				</div>
+			</div>
+			<div class="field attachment">
+				<!--<label class="label" for="attachment2"><span><?php echo __('Attachment 3') ?></span></label>-->
+				<div class="control">
+					<input name="attachment3" id="attachment3" title="<?php echo __('Attachment 3') ?>" value="" class="input-text" type="file" accept="image/jpeg,image/png,application/pdf" onchange="size_check('attachment3')"/>
+				</div>
+			</div>
+			<div class="field attachment">
+				<!--<label class="label" for="attachment2"><span><?php echo __('Attachment 4') ?></span></label>-->
+				<div class="control">
+					<input name="attachment4" id="attachment4" title="<?php echo __('Attachment 4') ?>" value="" class="input-text" type="file" accept="image/jpeg,image/png,application/pdf" onchange="size_check('attachment4')"/>
+				</div>
+			</div>
+			<div class="field attachment">
+				<!--<label class="label" for="attachment2"><span><?php echo __('Attachment 5') ?></span></label>-->
+				<div class="control">
+					<input name="attachment5" id="attachment5" title="<?php echo __('Attachment 5') ?>" value="" class="input-text" type="file" accept="image/jpeg,image/png,application/pdf" onchange="size_check('attachment5')"/>
+				</div>
+			</div>
+			<!--<div class="field">
+				<div class="control">
+					<div class="g-recaptcha" data-sitekey="6LcWe4UaAAAAAJlSwlY2K8XSdLsoFDzBbt6h8oUL"></div>
+					<div for="recaptcha" generated="true" class="mage-error" id="recaptcha-error">This is a required field.</div>
+				</div>
+			</div>-->
+			
+			<?php echo $block->getChildHtml('form.additional.info'); ?>
+        </div>
+        </fieldset>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit" id="submit" title="<?php echo __('Submit') ?>" class="action submit primary">
+                <span><?php echo __('Submit') ?></span>
+            </button>
+        </div>
+    </div>
+    <script type="text/javascript">
+    	
+    	function size_check(element_id)
+		{
+		    var upl = document.getElementById(element_id);
+		    var max = 6291456;
+
+		    if(upl.files[0].size > max)
+		    {
+		       alert("Please upload files smaller than 6MB");
+		       upl.value = "";
+		    }
+		};
+
+    </script>
+</form>

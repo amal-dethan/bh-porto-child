@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var $block \Magento\Catalog\Block\Product\View\Options\Type\Text */ ?>
+<?php
+$_option = $block->getOption();
+$class = ($_option->getIsRequire()) ? ' required' : '';
+?>
+
+<div class="field<?php if ($_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_AREA) {
+    echo ' textarea';
+} ?><?= /* @noEscape */ $class ?>">
+    <label class="label" for="options_<?= $block->escapeHtmlAttr($_option->getId()) ?>_text">
+        <span><?= $block->escapeHtml($_option->getTitle()) ?></span>
+        <?= /* @noEscape */ $block->getFormattedPrice() ?>
+    </label>
+
+    <div class="control">
+        <?php if ($_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_FIELD) :?>
+            <?php $_textValidate = null;
+            if ($_option->getIsRequire()) {
+                $_textValidate['required'] = true;
+            }
+            if ($_option->getMaxCharacters()) {
+                $_textValidate['maxlength'] = $_option->getMaxCharacters();
+            }
+            $_textValidate['validate-no-utf8mb4-characters'] = true;
+            ?>
+            <input type="text"
+                   id="options_<?= $block->escapeHtmlAttr($_option->getId()) ?>_text"
+                   class="input-text product-custom-option"
+                <?php if (!empty($_textValidate)) {?>
+                    data-validate="<?= $block->escapeHtml(json_encode($_textValidate)) ?>"
+                <?php } ?>
+                   name="options[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
+                   data-selector="options[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
+                   value="<?= $block->escapeHtml($block->getDefaultValue()) ?>"/>
+        <?php elseif ($_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_AREA) :?>
+            <?php $_textAreaValidate = null;
+            if ($_option->getIsRequire()) {
+                $_textAreaValidate['required'] = true;
+            }
+            if ($_option->getMaxCharacters()) {
+                $_textAreaValidate['maxlength'] = $_option->getMaxCharacters();
+            }
+            $_textAreaValidate['validate-no-utf8mb4-characters'] = true;
+            ?>
+            <textarea id="options_<?= $block->escapeHtmlAttr($_option->getId()) ?>_text"
+                      class="product-custom-option"
+                    <?php if (!empty($_textAreaValidate)) {?>
+                        data-validate="<?= $block->escapeHtml(json_encode($_textAreaValidate)) ?>"
+                    <?php } ?>
+                      name="options[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
+                      data-selector="options[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
+                      <?php if(preg_match('/Swage/', $_option->getSku())) { ?>
+                        placeholder="S1: 3832mm x 11 runs
+S2: 4510mm x 11 runs"
+                    <?php } ?>
+                      rows="5"
+                      cols="25"><?= $block->escapeHtml($block->getDefaultValue()) ?></textarea>
+        <?php endif; ?>
+        <?php if ($_option->getMaxCharacters()) :?>
+            <p class="note note_<?= $block->escapeHtmlAttr($_option->getId()) ?>">
+                <?= $block->escapeHtml(__('Maximum %1 characters', $_option->getMaxCharacters())) ?>
+                <span class="character-counter no-display"></span>
+            </p>
+        <?php endif; ?>
+    </div>
+
+    <?php if(preg_match('/Swage/', $_option->getSku())):?>
+        <div id="conditional-swaging">
+            <p>For DIY purchase the wire separately <a href="<?= $this->getUrl('wire-balustrade/balustrade-wire.html') ?>" target="_blank">here</a></p>
+            <p>For Factory Swaging wire the wire is purchased separately here:<br/>
+            <a href="<?= $this->getUrl('factory-swaging-wire-rope-7x7-3-2mm-aisi-316-per-metre.html')?>" target="_blank">7x7 3.2mm</a><br/>
+            <a href="<?= $this->getUrl('factory-swaging-wire-rope-1x19-3-2mm-aisi-316-per-metre.html')?>" target="_blank">1x19 3.2mm</a><br/>
+            <a href="<?= $this->getUrl('factory-swaging-wire-rope-7x7-4-0mm-aisi-316-per-metre.html')?>" target="_blank">7x7 4mm</a><br/>
+            <a href="<?= $this->getUrl('factory-swaging-wire-rope-1x19-4-0mm-aisi-316-per-metre.html')?>" target="_blank">1x19 4mm</a></p>
+            <div class="swaging-tooltip" style="margin-bottom: 10px;">To calculate the amount of wire required:
+                <div class="top">
+                    <p>Post-to-Post measurement x Number of runs</p>
+                    <div style="margin-left: 10px;"><em>Example 1</em><br>
+                    <em>Section 1:</em> 11 runs x 3450mm; 37,950mm<br>
+                    <em>Section 2:</em> 11 runs x 5350mm; 58,850mm<br>
+                    Total Wire 96,800mm = 96.8 metres.<br>
+                    Add 97m to your order (Total Rounded Up)<br>
+                    </div><br/>
+                    <p>Please Note: Any leftover/offcut wire for factory swaging will not be supplied. Any additional wire required should be purchased/ordered separately.</p>
+                </div>
+            </div>
+            <p>Current Factory Swaging Lead Time: Around 1 week</p>
+        </div>
+    <?php endif;?>
+    
+    <?php if ($_option->getMaxCharacters()) :?>
+        <script type="text/x-magento-init">
+        {
+            "[data-selector='options[<?= $block->escapeJs($_option->getId()) ?>]']": {
+                "Magento_Catalog/js/product/remaining-characters": {
+                    "maxLength":  "<?= (int)$_option->getMaxCharacters() ?>",
+                    "noteSelector": ".note_<?= $block->escapeJs($_option->getId()) ?>",
+                    "counterSelector": ".note_<?= $block->escapeJs($_option->getId()) ?> .character-counter"
+                }
+            }
+        }
+    </script>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,34 @@
+<?php $_product = $block->getProduct(); ?>
+<?php $qty = $_product->getExtensionAttributes()->getStockItem()->getQty(); ?>
+<?php if($_product->getAttributeText('stock_availability_status') != 'In Stock' && $_product->getAttributeText('stock_availability_status') != 'Out Of Stock'):?>
+<div style="color: #ff7104;"><strong><?= $_product->getAttributeText('stock_availability_status');?></strong></div>
+
+<?php if($_product->getAttributeText('stock_availability_status') == "**Special Order**"):?>
+    <hr>
+    <div>
+        <p><strong>What is a special order ?</strong><br/>
+            Item may not be stocked and may not be available for immediate pickup, but can be ordered in. See <a href="https://www.betterhardware.com.au/frequently-asked-questions" target="_blank">here</a> for how we handle dispatching orders with Special Order items as they may delay dispatching the rest of your order.
+        </p>
+    </div>
+<?php endif;?>
+
+<?php if($_product->getAttributeText('stock_availability_status') == "Call to Order"):?>
+    <hr>
+    <div>
+        <p>Item may not be stocked and may not be available for immediate pickup, but can be ordered in. See <a href="https://www.betterhardware.com.au/frequently-asked-questions" target="_blank">here</a> for how we handle dispatching orders with call to order items as they may delay dispatching the rest of your order.<br/>
+        Call to order items may also incur additional shipping costs.
+        </p>
+    </div>
+<?php endif;?>
+
+<?php if($_product->getAttributeText('stock_availability_status') == "**Clearance**"):?>
+    <?php if($qty > 0):?>
+        <div style="text-transform: capitalize;">Only <strong><?= $qty ?></strong> Qty Remaining !</div>
+    <?php endif;?>
+<?php endif;?>
+
+<?php endif;?>
+
+<?php if (!$_product->getIsSalable()): ?>
+    <div class="p-out-of-stock"><span><?php echo __('Out of stock') ?></span></div>
+<?php endif; ?>

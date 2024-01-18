@@ -1,0 +1,59 @@
+<?php
+    $_helper = $this->helper('Smartwave\Porto\Helper\Data');
+    $header_type = $this->getConfig('porto_settings/header/header_type');
+    $header2_text = $this->getConfig('porto_settings/header/header2_text');
+    $show_notice = $this->getConfig('porto_settings/general/show_site_notice');
+    if ($show_notice && $show_notice == 1)
+        echo $this->getChildHtml("porto_custom_notice");
+?>
+<header class="page-header type<?php echo $header_type; ?>" >
+  <!--***TOP BAR***-->
+    <h4 style="font-size: 20px;margin-top: 0 !important;background-color: red;text-align: center;padding: 8px;margin-bottom: 0 !important;
+    font-family: inherit;color: white !important;">This is a TEST site. Do not place orders here. Go to <a href="https://www.betterhardware.com.au" style="color: #ffeb3b">Better Hardware</a> for purchases</h4>
+<?php echo $this->getChildHtml("header_customer_form_login"); ?>
+  <div class="main-panel-top">
+      <div class="container header-1">
+          <div class="main-panel-inner">
+              <div class="panel wrapper">
+                <div class="header-left">
+                  <div class="firstlink">
+                    <a href="<?= $_helper->getBaseLinkUrl().'where-dreams-are-built'?>"><i class="fas fa-heart"></i> Impact</a>
+                  </div>
+                  <div class="restoflinks">
+                    <a href="<?= $_helper->getBaseLinkUrl().'click-and-collect'?>"><i class="fas fa-map-marker-alt"></i> Click & Collect</a>
+                    <a href="<?= $_helper->getBaseLinkUrl().'free-shipping'?>"><i class="fas fa-truck"></i> FREE METRO SHIPPING on orders over $99*</a>
+                    <a href="<?= $_helper->getBaseLinkUrl().'returns-policy'?>"><i class="fas fa-sync-alt"></i> 60 Day Returns</a>
+                    <?= $this->getLoginBlock(); ?>
+                  </div>
+                </div>
+                <div class="header-right">
+                  <div class="fb-plugin">
+                      <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fbetterhardware&amp;layout=button_count&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;amp" frameborder="0" height="24" width="100"></iframe>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="header-main">
+    <div class="header content header-row">
+      <div class="header-left">
+        <span data-action="toggle-nav" class="action nav-toggle"><span><?php echo __('Toggle Nav') ?></span></span>
+        <?php echo $this->getChildHtml("logo"); ?>
+      </div>
+      <div class="header-center">
+        <div class="search-area show-icon-tablet">
+          <a href="javascript:void(0);" class="search-toggle-icon"><span><i class="porto-icon-magnifier"></i></span></a>
+          <?php echo $this->getChildHtml("top.search"); ?>
+        </div>
+        <div class="header-contact">
+          <?php echo $this->getChildHtml("custom_block"); ?>
+        </div>
+      </div>
+      <div class="header-right">
+        <?php echo $this->getChildHtml("minicart"); ?>
+      </div>
+    </div>
+  </div>
+  <?php echo $this->getChildHtml("navigation.sections"); ?>
+</header>
