@@ -12,9 +12,17 @@
 <?php $stockItem = $_product->getExtensionAttributes()->getStockItem() ?>
 <?php $qty = $stockItem->getQty() ?>
 <?php $stockStatus = $stockItem->getIsInStock() ?>
+<?php $availabilityStatus = $_product->getAttributeText('stock_availability_status') ?>
 <?php if ($block->displayProductStockStatus()): ?>
-    <div class="stock available" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>">
-        <span class="label"><?php /* @escapeNotVerified */ echo __('Availability:') ?></span>
-        <span><?php /* @escapeNotVerified */ echo $stockStatus ?></span>
-    </div>
+    <?php if($qty > 0 && $stockStatus == 1 && !in_array($availabilityStatus, ["Call to Order","Out of Stock","**Special Order**","**Clearance**"],true)): ?>
+        <div class="stock available" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>">
+            <span class="label"><?php /* @escapeNotVerified */ echo __('Availability:') ?></span>
+            <span><?php /* @escapeNotVerified */ echo __('In Stock') ?></span>
+        </div>
+    <?php else:?>
+        <div class="stock available" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>">
+            <span class="label"><?php /* @escapeNotVerified */ echo __('Availability:') ?></span>
+            <span><?php /* @escapeNotVerified */ echo __('Available') ?></span>
+        </div>
+    <?php endif;?>
 <?php endif; ?>
