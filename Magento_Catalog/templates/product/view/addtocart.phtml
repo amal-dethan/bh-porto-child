@@ -90,7 +90,8 @@
 <?php else:?>
 <?php echo $this->getLayout()
                 ->createBlock('Magento\Cms\Block\Block')
-                ->setBlockId('post-rfq-cta'); 
+                ->setBlockId('post-rfq-cta')
+                ->toHtml(); 
 ?>
 <div class="action primary cto">
     <a href="tel:1300309764"><i class="porto-icon-phone"></i> Call To Order</a>
