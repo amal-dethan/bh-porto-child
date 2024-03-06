@@ -1,0 +1,4 @@
+<?php $_product = $block->getProduct(); ?>
+<?php if(preg_match('/^S-BB/', $_product->getSku()) && preg_match('/Bugle Batten Screws/', $_product->getName()) ): ?>
+	<p style="margin-top: 1em;">Want a deal on some Bugle Batten Screws? Check out our <a href="<?= $block->getUrl().'on-sale-now.html' ?>" target="_blank">'On Sale'</a> page for some Clearance boxes of bugles. Limited Stock, once they're gone that's it!</p>
+<?php endif;?>

@@ -1,0 +1,10 @@
+<?php $_product = $block->getProduct(); ?>
+<?php if(preg_match('/^P-/', $_product->getSku()) && preg_match('/Post/', $_product->getName()) ): ?>
+	<?php if(date('Y-m-d H:i') <= "2024-01-08 11:59"): ?>
+		<div class="card" style="background-color: #ff7104;color: white;margin-bottom: 1.5em;border-radius: 0;text-align: center;">
+		  <div class="card-body">
+		    <span><strong>Please note: Final cut-off date for custom post fabrication is Wednesday 13th December, recommencing 8th January 2024</strong></span>
+		  </div>
+		</div>
+	<?php endif;?>
+<?php endif;?>
